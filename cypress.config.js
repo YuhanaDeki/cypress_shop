@@ -37,6 +37,11 @@ module.exports = defineConfig({
       'cypress/e2e/officer/07_product.cy.js',
     ],
   },
+  reporter: 'allure-mocha',
+  reporterOptions: {
+    allure: true,
+    outputDir: 'cypress/reports/allure-results',
+  },
 
 
 
