@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    environment {
-            NODE_OPTIONS = '--max-old-space-size=4096' // ป้องกัน Memory Issue
-    }
+
+    tools{nodejs "NodeJS21"}
+
     stages {        
         stage('Checkout Code') {
             steps {
@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'npm install' // ติดตั้ง Cypress และ Dependencies
+                sh 'npm i' // ติดตั้ง Cypress และ Dependencies
             }
         }
         stage('Run Cypress Tests') {
