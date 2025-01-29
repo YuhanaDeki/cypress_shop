@@ -21,8 +21,14 @@ pipeline {
         }
         stage('Generate Report') {
             steps {
-        sh 'npx mochawesome-merge > mochawesome.json'
-        sh 'npx mochawesome-report-generator mochawesome.json -o cypress/reports'
+                sh 'npx mochawesome-merge > mochawesome.json'
+                sh 'npx mochawesome-report-generator mochawesome.json -o cypress/reports'
+            }
+        }
+        stage('Debug Workspace') { // Debug workspace เพื่อดูว่ารายงานถูกสร้างหรือไม่
+            steps {
+                sh 'ls -l cypress/reports' // สำหรับ Linux/MacOS
+                bat 'dir cypress\\reports' // สำหรับ Windows
             }
         }
     }
