@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@shelex/cypress-allure-plugin": "^2.40.2",
+    "allure-mocha": "^3.0.9",
     "cypress": "^14.0.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-xpath": "^2.0.1",
@@ -12,5 +13,8 @@
   "dependencies": {
     "electron": "^34.0.0",
     "node-screen": "^0.0.12"
+  },
+  "scripts": {
+    "cy:spec": "cypress run --browser chrome --spec 'cypress/e2e/'"
   }
 }
