@@ -1,6 +1,9 @@
 pipeline {
     agent any
     stages {
+        environment {
+        NODE_OPTIONS = '--max-old-space-size=4096' // ป้องกัน Memory Issue
+        }
         stage('Checkout Code') {
             steps {
                 checkout scm // ดึงโค้ดจาก Git Repository
@@ -27,6 +30,7 @@ pipeline {
         }
     }
 
+
     stage('Generate Report') {
     steps {
         sh 'npx mochawesome-merge > mochawesome.json'
@@ -35,6 +39,7 @@ pipeline {
 }
 post {
     always {
+        archiveArtifacts artifacts: 'cypress/reports/**/*', fingerprint: true
         publishHTML(target: [
             reportName: 'Cypress Test Report',
             reportDir: 'cypress/reports',
@@ -43,6 +48,7 @@ post {
         ])
     }
 }
+
 post {
     always {
         allure([
@@ -54,7 +60,5 @@ post {
         ])
     }
 }
+
 }
-
-
-
