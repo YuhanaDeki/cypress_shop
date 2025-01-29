@@ -11,12 +11,12 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'npm i' // ติดตั้ง Cypress และ Dependencies
+                bat 'npm i' // ติดตั้ง Cypress และ Dependencies
             }
         }
         stage('Run Cypress Tests') {
             steps {
-                sh 'npx cypress run' // รัน Cypress Test
+                bat 'npx cypress run' // รัน Cypress Test
             }
         }
         // stage('Generate Report') {
