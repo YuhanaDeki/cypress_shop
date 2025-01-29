@@ -30,24 +30,17 @@ pipeline {
         always {
             archiveArtifacts artifacts: 'cypress/videos/*.mp4', fingerprint: true // เก็บวิดีโอของการทดสอบ
             archiveArtifacts artifacts: 'cypress/screenshots/**/*', fingerprint: true // เก็บ Screenshot
-        }
-        failure {
-            echo 'Tests failed!' // แสดงข้อความเมื่อการทดสอบล้มเหลว
-        }
-    }
-    post {
-        always {
             archiveArtifacts artifacts: 'cypress/reports/**/*', fingerprint: true
+
+            // แสดง HTML Report ใน Jenkins
             publishHTML(target: [
                 reportName: 'Cypress Test Report',
                 reportDir: 'cypress/reports',
                 reportFiles: 'index.html',
                 alwaysLinkToLastBuild: true
             ])
-        }
-    }
-    post {
-        always {
+
+            // Generate และ Publish Allure Report
             allure([
                 includeProperties: false,
                 jdk: '',
@@ -56,6 +49,8 @@ pipeline {
                 results: [[path: 'cypress/reports/allure-results']]
             ])
         }
-    }
-
+        failure {
+            echo 'Tests failed!' // แสดงข้อความเมื่อการทดสอบล้มเหลว
+        }
+    }   
 }
