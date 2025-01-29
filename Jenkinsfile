@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    stages {
-        environment {
-        NODE_OPTIONS = '--max-old-space-size=4096' // ป้องกัน Memory Issue
-        }
+    environment {
+            NODE_OPTIONS = '--max-old-space-size=4096' // ป้องกัน Memory Issue
+    }
+    stages {        
         stage('Checkout Code') {
             steps {
                 checkout scm // ดึงโค้ดจาก Git Repository
@@ -19,6 +19,12 @@ pipeline {
                 sh 'npx cypress run' // รัน Cypress Test
             }
         }
+        stage('Generate Report') {
+            steps {
+        sh 'npx mochawesome-merge > mochawesome.json'
+        sh 'npx mochawesome-report-generator mochawesome.json -o cypress/reports'
+            }
+        }
     }
     post {
         always {
@@ -29,36 +35,27 @@ pipeline {
             echo 'Tests failed!' // แสดงข้อความเมื่อการทดสอบล้มเหลว
         }
     }
-
-
-    stage('Generate Report') {
-    steps {
-        sh 'npx mochawesome-merge > mochawesome.json'
-        sh 'npx mochawesome-report-generator mochawesome.json -o cypress/reports'
+    post {
+        always {
+            archiveArtifacts artifacts: 'cypress/reports/**/*', fingerprint: true
+            publishHTML(target: [
+                reportName: 'Cypress Test Report',
+                reportDir: 'cypress/reports',
+                reportFiles: 'index.html',
+                alwaysLinkToLastBuild: true
+            ])
+        }
     }
-}
-post {
-    always {
-        archiveArtifacts artifacts: 'cypress/reports/**/*', fingerprint: true
-        publishHTML(target: [
-            reportName: 'Cypress Test Report',
-            reportDir: 'cypress/reports',
-            reportFiles: 'index.html',
-            alwaysLinkToLastBuild: true
-        ])
+    post {
+        always {
+            allure([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'cypress/reports/allure-results']]
+            ])
+        }
     }
-}
-
-post {
-    always {
-        allure([
-            includeProperties: false,
-            jdk: '',
-            properties: [],
-            reportBuildPolicy: 'ALWAYS',
-            results: [[path: 'cypress/reports/allure-results']]
-        ])
-    }
-}
 
 }
