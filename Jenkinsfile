@@ -26,9 +26,8 @@ pipeline {
             echo 'Tests failed!' // แสดงข้อความเมื่อการทดสอบล้มเหลว
         }
     }
-}
 
-stage('Generate Report') {
+    stage('Generate Report') {
     steps {
         sh 'npx mochawesome-merge > mochawesome.json'
         sh 'npx mochawesome-report-generator mochawesome.json -o cypress/reports'
@@ -55,4 +54,7 @@ post {
         ])
     }
 }
+}
+
+
 
