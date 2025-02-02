@@ -3,6 +3,11 @@ pipeline {
 
     tools{nodejs "NodeJS21"}
 
+    options {    
+        ansiColor('xterm')
+     }
+
+
     stages {        
         stage('Checkout Code') {
             steps {
