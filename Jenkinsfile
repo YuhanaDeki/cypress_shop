@@ -19,9 +19,21 @@ pipeline {
         
         stage('Run Cypress Tests') {
             steps {
-                withEnv(['NODE_OPTIONS=--encoding=utf-8','JAVA_OPTS=-Dfile.encoding=UTF-8']){
-                    bat 'npx cypress run' // รัน Cypress Test
-                }           
+                withEnv(['NODE_OPTIONS=--encoding=utf-8', 'JAVA_OPTS=-Dfile.encoding=UTF-8']) {
+                    bat 'npx cypress run' // รัน Cypress
+                }
+            }
+        }
+
+        stage('Debug Workspace') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'ls -l cypress/reports'
+                    } else {
+                        bat 'dir cypress\\reports'
+                    }
+                }
             }
         }
 
