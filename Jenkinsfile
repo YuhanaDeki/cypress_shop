@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools{nodejs "NodeJS21"}
-    
+
     environment {
         JAVA_OPTS = '-Dfile.encoding=UTF-8'
         NODE_OPTIONS = '--encoding=utf-8'
@@ -14,16 +14,33 @@ pipeline {
                 checkout scm // ดึงโค้ดจาก Git Repository
             }
         }
+
         stage('Install Dependencies') {
             steps {
-                bat 'npm i' // ติดตั้ง Cypress และ Dependencies
+                bat 'npm ci' // ติดตั้ง Cypress และ Dependencies
             }
         }
+
+        
         stage('Run Cypress Tests') {
             steps {
-                bat 'npx cypress run --encoding=utf8' // รัน Cypress Test
+                withEnv(['NODE_OPTIONS=--encoding=utf-8','JAVA_OPTS=-Dfile.encoding=UTF-8']){
+                    bat 'npx cypress run' // รัน Cypress Test
+                }           
             }
         }
+
+        steps{
+            script{
+                if(isUnix()){
+                    sh 'ls -l cypress/reports'
+                }else{
+                    bat 'dir cypress\\reports'
+                }
+            }
+        }
+       
+
         // stage('Generate Report') {
         //     steps {
         //         sh 'npx mochawesome-merge > mochawesome.json'
