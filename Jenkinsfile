@@ -26,7 +26,7 @@ pipeline {
             steps {
                 bat '''
                     chcp 65001
-                    npx NO_COLOR=1 cypress run --browser chrome
+                    npx cypress run --browser chrome
                 '''
             }
         }
