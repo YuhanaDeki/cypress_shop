@@ -30,15 +30,15 @@ pipeline {
             }
         }
 
-        steps{
-            script{
-                if(isUnix()){
-                    sh 'ls -l cypress/reports'
-                }else{
-                    bat 'dir cypress\\reports'
-                }
-            }
-        }
+        // steps{
+        //     script{
+        //         if(isUnix()){
+        //             sh 'ls -l cypress/reports'
+        //         }else{
+        //             bat 'dir cypress\\reports'
+        //         }
+        //     }
+        // }
        
 
         // stage('Generate Report') {
