@@ -1,10 +1,10 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
-  // reporter: "allure-mocha",
-  // reporterOptions: {
-  //   resultsDir: "cypress/reports/allure-results", // ที่เก็บผลลัพธ์ Allure
-  // },
+  reporter: "allure-mocha",
+  reporterOptions: {
+    resultsDir: "cypress/reports/allure-results", // ที่เก็บผลลัพธ์ Allure
+  },
 
   e2e: {
     setupNodeEvents(on, config) {
@@ -15,8 +15,8 @@ module.exports = defineConfig({
         },
       });
 
-      // require('@shelex/cypress-allure-plugin')(on, config);
-      // return config;
+      require('@shelex/cypress-allure-plugin')(on, config);
+      return config;
 
     },
     baseUrl: 'https://shop.oatzany.in.th/',

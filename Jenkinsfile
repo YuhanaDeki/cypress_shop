@@ -67,31 +67,31 @@ pipeline {
         //     }
         // }
     }
-    // post {
-    //     always {
-    //         archiveArtifacts artifacts: 'cypress/videos/*.mp4', fingerprint: true // เก็บวิดีโอของการทดสอบ
-    //         archiveArtifacts artifacts: 'cypress/screenshots/**/*', fingerprint: true // เก็บ Screenshot
-    //         archiveArtifacts artifacts: 'cypress/reports/**/*', fingerprint: true
+    post {
+        always {
+            archiveArtifacts artifacts: 'cypress/videos/*.mp4', fingerprint: true // เก็บวิดีโอของการทดสอบ
+            archiveArtifacts artifacts: 'cypress/screenshots/**/*', fingerprint: true // เก็บ Screenshot
+            archiveArtifacts artifacts: 'cypress/reports/**/*', fingerprint: true
 
-    //         // แสดง HTML Report ใน Jenkins
-    //         publishHTML(target: [
-    //             reportName: 'Cypress Test Report',
-    //             reportDir: 'cypress/reports',
-    //             reportFiles: 'index.html',
-    //             alwaysLinkToLastBuild: true
-    //         ])
+            // แสดง HTML Report ใน Jenkins
+            publishHTML(target: [
+                reportName: 'Cypress Test Report',
+                reportDir: 'cypress/reports',
+                reportFiles: 'index.html',
+                alwaysLinkToLastBuild: true
+            ])
 
-    //         // Generate และ Publish Allure Report
-    //         allure([
-    //             includeProperties: false,
-    //             jdk: '',
-    //             properties: [],
-    //             reportBuildPolicy: 'ALWAYS',
-    //             results: [[path: 'cypress/reports/allure-results']]
-    //         ])
-    //     }
-    //     failure {
-    //         echo 'Tests failed!' // แสดงข้อความเมื่อการทดสอบล้มเหลว
-    //     }
-    // }   
+            // Generate และ Publish Allure Report
+            allure([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'cypress/reports/allure-results']]
+            ])
+        }
+        failure {
+            echo 'Tests failed!' // แสดงข้อความเมื่อการทดสอบล้มเหลว
+        }
+    }   
 }
