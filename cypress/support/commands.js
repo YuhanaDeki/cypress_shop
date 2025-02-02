@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-file-upload';
 import 'cypress-xpath';
+import 'cypress-wait-until';
 
 let errors = [];
 
@@ -57,6 +58,12 @@ Cypress.Commands.add('login', (username, password, maxRetries = 5) => {
     cy.xpath('//*[@id="password"]', { timeout: 5000 }).type(password);
     cy.xpath('//*[@name="login"]', { timeout: 5000 }).click();
     waitForLoginSuccess(2);
+});
+
+// Click button
+Cypress.Commands.add('clickBtn', (xpath) => {
+    // cy.xpath(`${xpath}`).click();
+    cy.get('');
 });
 
 

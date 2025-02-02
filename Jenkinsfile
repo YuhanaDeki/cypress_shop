@@ -16,10 +16,7 @@ pipeline {
         }
         stage('Run Cypress Tests') {
             steps {
-                bat '''
-                chcp 65001
-                npx cypress run
-                ''' // รัน Cypress Test
+                bat 'npx cypress run' // รัน Cypress Test
             }
         }
         // stage('Generate Report') {
