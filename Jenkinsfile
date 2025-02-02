@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     tools{nodejs "NodeJS21"}
+    
+    environment {
+        JAVA_OPTS = '-Dfile.encoding=UTF-8'
+        NODE_OPTIONS = '--encoding=utf-8'
+    }
 
     stages {        
         stage('Checkout Code') {
@@ -16,7 +21,7 @@ pipeline {
         }
         stage('Run Cypress Tests') {
             steps {
-                bat 'npx cypress run' // รัน Cypress Test
+                bat 'npx cypress run --encoding=utf8' // รัน Cypress Test
             }
         }
         // stage('Generate Report') {

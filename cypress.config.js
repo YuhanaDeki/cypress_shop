@@ -34,6 +34,7 @@ module.exports = defineConfig({
       bank_full_name: 'Test_Bank_Full_Name',
       bank_init_name_edit: 'Test_Bank_Init_Name_Edit',
       bank_full_name_edit: 'Test_Bank_Full_Name_Edit',
+      encoding: 'utf-8',
     },
 
     specPattern: [
@@ -45,6 +46,7 @@ module.exports = defineConfig({
       'cypress/e2e/user/06_shop_product_user_payment.cy.js',
       'cypress/e2e/officer/07_product.cy.js',
     ],
+
   },
 
 
