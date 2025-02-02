@@ -3,11 +3,6 @@ pipeline {
 
     tools{nodejs "NodeJS21"}
 
-    environment {
-        JAVA_OPTS = '-Dfile.encoding=UTF-8'
-        NODE_OPTIONS = '--encoding=utf-8'
-    }
-
     stages {        
         stage('Checkout Code') {
             steps {
